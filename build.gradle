@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id 'java-library'
 }
 
 group 'com.cursor'
@@ -21,5 +22,48 @@ dependencies {
 }
 
 test {
-    useTestNG()
+    useTestNG(){
+
+    }
 }
+
+
+configurations {
+    cucumberRuntime {
+        extendsFrom testImplementation
+    }
+}
+
+task cucumber() {
+    dependsOn assemble, testClasses
+    doLast {
+        javaexec {
+            main = "io.cucumber.core.cli.Main"
+            classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
+            args = ['--plugin', 'pretty','--glue', 'HW24_Lecture28_Build_managers_CI.definitions', 'src/test/resources/features/']
+        }
+    }
+}
+
+//task getexample() {
+//    dependsOn assemble, compileTestJava
+//    doLast {
+//        javaexec {
+//            main = "io.cucumber.core.cli.Main"
+//            classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
+//            args = ['--plugin', 'pretty', '--glue', 'Cucumber_Gradle_Demo.definitions', 'src/test/resources/features/', '--tags', '@getexample']
+//        }
+//    }
+//}
+//
+//task postexample() {
+//    dependsOn assemble, compileTestJava
+//    doLast {
+//        javaexec {
+//            main = "io.cucumber.core.cli.Main"
+//            classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
+//            args = ['--plugin', 'pretty', '--glue', 'Cucumber_Gradle_Demo.definitions', 'src/test/resources/features/', '--tags', '@postexample']
+//        }
+//    }
+//}
+

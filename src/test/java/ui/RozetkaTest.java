@@ -31,6 +31,7 @@ public class RozetkaTest extends BaseTest {
         firstLaptopHPPageBO.clickOnBuyButtonAndClickToOrderButtonNewWindow();
 
         basketPageBO = new BasketPageBO();
+        System.out.println("we start test from here");
 
         Assert.assertEquals(basketPageBO.getCountProductInBasket(), 1);
         Assert.assertTrue(basketPageBO.getTotalPriceOfProductsInBasket() < 200000);
